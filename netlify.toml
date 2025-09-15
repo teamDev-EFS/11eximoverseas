@@ -17,12 +17,9 @@
   VITE_ENABLE_DEBUG = "false"
   VITE_GOOGLE_MAPS_API_KEY = "AIzaSyDoy4xd7POgSrkLzxi8Z3b5DT4nrDA-zmw"
   VITE_DOMAIN = "www.the11eximoverseas.com"
+  VITE_API_URL = "/api"
 
-[[redirects]]
-  # Handle client-side routing
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Redirects are handled by _redirects file in public directory
 
 [context.production]
   # Production-specific settings

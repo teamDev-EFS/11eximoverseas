@@ -89,7 +89,12 @@ app.use(
         fontSrc: ["'self'", "https://fonts.gstatic.com"],
         imgSrc: ["'self'", "data:", "https:"],
         scriptSrc: ["'self'"],
-        connectSrc: ["'self'"],
+        connectSrc: [
+          "'self'",
+          "https://one1eximoverseas.onrender.com", // backend Render URL
+          "https://the11eximoverseas.com", // frontend domain
+          "https://www.the11eximoverseas.com",
+        ],
       },
     },
   })

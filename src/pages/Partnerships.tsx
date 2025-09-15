@@ -67,7 +67,7 @@ const Partnerships = () => {
       growth: "+250%",
       testimonial:
         "The11EximOverSeas has been our trusted partner for premium rice and spices. Their quality and reliability are unmatched.",
-      image: "/src/assets/images/globalfoods.jpg",
+      image: "/images/globalfoods.jpg",
     },
     {
       company: "European Import Co.",
@@ -76,7 +76,7 @@ const Partnerships = () => {
       growth: "+180%",
       testimonial:
         "Excellent product quality and on-time delivery. They've helped us establish a strong presence in the European market.",
-      image: "/src/assets/images/asia-pacific.png",
+      image: "/images/asia-pacific.png",
     },
     {
       company: "Asia Pacific Foods",
@@ -85,7 +85,7 @@ const Partnerships = () => {
       growth: "+320%",
       testimonial:
         "Their commitment to quality and sustainability aligns perfectly with our brand values. Highly recommended partner.",
-      image: "/src/assets/images/Middle-East-Map.jpg",
+      image: "/images/Middle-East-Map.jpg",
     },
   ];
 
