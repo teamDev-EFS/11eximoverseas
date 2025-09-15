@@ -26,7 +26,7 @@ services:
       - key: ADMIN_EMAIL
         value: the11eximoverseas@gmail.com
       - key: CORS_ORIGIN
-        value: https://www.the11eximoverseas.com
+        value: https://the11eximoverseas.com,https://www.the11eximoverseas.com
       - key: JWT_SECRET
         generateValue: true
       - key: RATE_LIMIT_WINDOW_MS

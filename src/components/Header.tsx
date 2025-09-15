@@ -80,7 +80,7 @@ const Header = () => {
               <div className="relative">
                 <div className="w-22 h-18 flex items-center justify-center group-hover:scale-105 transition-transform duration-300 rounded-lg bg-white/50 p-2 shadow-sm">
                   <img
-                    src="/src/assets/images/11eximoverseas-logo.svg"
+                    src="/images/11eximoverseas-logo.svg"
                     alt="The11EximOverSeas Logo"
                     className="h-18 w-22 max-w-none"
                   />

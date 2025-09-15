@@ -528,7 +528,7 @@ const Home = () => {
               </div>
               <div className="relative">
                 <img
-                  src="/src/assets/images/globalfoods.jpg"
+                  src="/images/globalfoods.jpg"
                   alt="Global Trade"
                   className="w-full h-96 object-cover rounded-2xl"
                 />

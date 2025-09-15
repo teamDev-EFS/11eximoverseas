@@ -39,5 +39,5 @@
 
 # Custom domain configuration
 [context.production.environment]
-  VITE_DOMAIN = "www.the11eximoverseas.com"
-  VITE_CANONICAL_URL = "https://www.the11eximoverseas.com"
+  VITE_DOMAIN = "the11eximoverseas.com"
+  VITE_CANONICAL_URL = "https://the11eximoverseas.com"

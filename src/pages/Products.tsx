@@ -191,7 +191,7 @@ const Products = () => {
       name: "Premium Basmati Rice ST24/ST25",
       description:
         "Export quality premium basmati rice varieties with superior taste, texture, and distinctive aroma",
-      image: "/src/assets/images/jasmine-rice.jpg",
+      image: "/images/jasmine-rice.jpg",
       category: "Rice",
       certifications: ["APEDA", "FSSAI", "ISO 9001"],
       rating: 4.9,
@@ -203,7 +203,7 @@ const Products = () => {
       name: "Natural Jaggery Blocks",
       description:
         "Pure, chemical-free jaggery in small and large blocks, perfect for health-conscious consumers",
-      image: "/src/assets/images/pure-jaggery.jpg",
+      image: "/images/pure-jaggery.jpg",
       category: "Sweeteners",
       certifications: ["Organic", "FSSAI", "Natural"],
       rating: 4.8,
@@ -215,7 +215,7 @@ const Products = () => {
       name: "Fresh Garlic & Onion",
       description:
         "Premium quality fresh garlic and onions for global markets with extended shelf life",
-      image: "/src/assets/images/onion_garlic.jpeg",
+      image: "/images/onion_garlic.jpeg",
       category: "Vegetables",
       certifications: ["Fresh", "APEDA", "Export Quality"],
       rating: 4.7,
@@ -227,7 +227,7 @@ const Products = () => {
       name: "Premium Spices Collection",
       description:
         "Cumin, Fenugreek, and authentic Indian spices with rich aroma and flavor",
-      image: "/src/assets/images/premium_spices.jpg",
+      image: "/images/premium_spices.jpg",
       category: "Spices",
       certifications: ["FSSAI", "ISO", "Premium Grade"],
       rating: 4.9,
@@ -239,7 +239,7 @@ const Products = () => {
       name: "Makhana & Millets",
       description:
         "Nutritious pearl millets, sorghum, and premium makhana for health food markets",
-      image: "/src/assets/images/Makhana.jpg",
+      image: "/images/Makhana.jpg",
       category: "Grains",
       certifications: ["Organic", "Nutritious", "Premium"],
       rating: 4.6,
@@ -251,7 +251,7 @@ const Products = () => {
       name: "Scented Candles Collection",
       description:
         "Premium lifestyle scented candles for global markets with exotic fragrances",
-      image: "/src/assets/images/scented candles.webp",
+      image: "/images/scented candles.webp",
       category: "Lifestyle",
       certifications: ["Premium", "Handmade", "Quality"],
       rating: 4.8,

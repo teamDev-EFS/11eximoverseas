@@ -60,7 +60,7 @@ const Footer = () => {
               <div className="relative">
                 <div className="w-20 h-16 flex items-center justify-center">
                   <img
-                    src="/src/assets/images/11eximoverseas-logo.svg"
+                    src="/images/11eximoverseas-logo.svg"
                     alt="The11EximOverSeas Logo"
                     className="h-16 w-auto"
                   />
