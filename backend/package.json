@@ -1,11 +1,12 @@
 {
-  "name": "namasteexim-backend",
+  "name": "the11eximoverseas-backend",
   "version": "1.0.0",
   "description": "Backend API for Namaste EXIM Ventures",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
+    "build": "echo \"No build step required for backend\" && exit 0",
     "dev": "nodemon server.js",
     "prod": "NODE_ENV=production node server.js",
     "test": "echo \"No tests specified\" && exit 0",
@@ -18,7 +19,7 @@
     "mongoose",
     "api"
   ],
-  "author": "Namaste EXIM",
+  "author": "The11EximOverSeas",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
