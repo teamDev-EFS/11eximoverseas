@@ -1,4 +1,6 @@
 [build]
+  # Base directory (root of the repository)
+  base = "."
   # Build command for Netlify
   command = "npm run build"
   # Directory to publish
