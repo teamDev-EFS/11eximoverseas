@@ -459,10 +459,10 @@ const Team = () => {
 
       {/* Contact Modal */}
       {showContactModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-gray-900">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-50">
+          <div className="bg-white rounded-xl sm:rounded-2xl max-w-md w-full mx-2 sm:mx-0 p-4 sm:p-6 max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4 sm:mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
                 Contact Our Team
               </h3>
               <button
@@ -491,7 +491,10 @@ const Team = () => {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleContactSubmit} className="space-y-4">
+              <form
+                onSubmit={handleContactSubmit}
+                className="space-y-3 sm:space-y-4"
+              >
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Full Name *
@@ -501,7 +504,7 @@ const Team = () => {
                     name="name"
                     value={contactFormData.name}
                     onChange={handleContactInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-900 ${
                       contactErrors.name ? "border-red-500" : "border-gray-300"
                     }`}
                     placeholder="Enter your full name"
@@ -522,7 +525,7 @@ const Team = () => {
                     name="email"
                     value={contactFormData.email}
                     onChange={handleContactInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-900 ${
                       contactErrors.email ? "border-red-500" : "border-gray-300"
                     }`}
                     placeholder="Enter your email address"
@@ -543,7 +546,7 @@ const Team = () => {
                     name="phone"
                     value={contactFormData.phone}
                     onChange={handleContactInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-900 ${
                       contactErrors.phone ? "border-red-500" : "border-gray-300"
                     }`}
                     placeholder="Enter your phone number"
@@ -564,7 +567,7 @@ const Team = () => {
                     name="company"
                     value={contactFormData.company}
                     onChange={handleContactInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-900 ${
                       contactErrors.company
                         ? "border-red-500"
                         : "border-gray-300"
@@ -587,7 +590,7 @@ const Team = () => {
                     value={contactFormData.message}
                     onChange={handleContactInputChange}
                     rows={4}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-900 ${
                       contactErrors.message
                         ? "border-red-500"
                         : "border-gray-300"
@@ -607,7 +610,7 @@ const Team = () => {
                   </div>
                 )}
 
-                <div className="flex space-x-3 pt-4">
+                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 pt-3 sm:pt-4">
                   <button
                     type="button"
                     onClick={() => {
@@ -616,14 +619,14 @@ const Team = () => {
                       setContactSubmitError("");
                       setContactSuccess(false);
                     }}
-                    className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                    className="flex-1 border border-gray-300 text-gray-700 py-2 sm:py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm sm:text-base"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmittingContact}
-                    className="flex-1 bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-1 bg-primary-600 text-white py-2 sm:py-3 rounded-lg hover:bg-primary-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
                   >
                     {isSubmittingContact ? "Sending..." : "Send Message"}
                   </button>
