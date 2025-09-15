@@ -1,6 +1,7 @@
 // API Configuration
 const API_BASE_URL =
-  (import.meta as any).env?.VITE_API_URL || "http://localhost:5000/api";
+  (import.meta as any).env?.VITE_API_URL ||
+  "https://one1eximoverseas.onrender.com/api";
 
 // API Response Types
 interface ApiResponse<T = any> {
@@ -131,6 +132,16 @@ export const api = {
   // Health check
   async healthCheck(): Promise<ApiResponse> {
     return apiCall("/health");
+  },
+
+  // Get documents
+  async getDocuments(): Promise<ApiResponse> {
+    return apiCall("/documents");
+  },
+
+  // Get team data
+  async getTeam(): Promise<ApiResponse> {
+    return apiCall("/team");
   },
 };
 
