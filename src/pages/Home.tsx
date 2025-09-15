@@ -11,9 +11,13 @@ import {
   Users,
   Award,
   Leaf,
+  X,
 } from "lucide-react";
 import SEO from "../components/SEO";
 import { motion } from "framer-motion";
+import { api } from "../services/api";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -23,6 +27,20 @@ const Home = () => {
     clients: 0,
     success: 0,
   });
+  const [showQuoteForm, setShowQuoteForm] = useState(false);
+  const [quoteFormData, setQuoteFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    product: "",
+    quantity: "",
+    requirements: "",
+  });
+  const [quoteErrors, setQuoteErrors] = useState<Record<string, string>>({});
+  const [quoteSubmitError, setQuoteSubmitError] = useState("");
+  const [isSubmittingQuote, setIsSubmittingQuote] = useState(false);
+  const [quoteSuccess, setQuoteSuccess] = useState(false);
 
   const heroSlides = [
     {
@@ -30,7 +48,7 @@ const Home = () => {
         "Connecting India's Finest Agricultural Products to Global Markets",
       subtitle:
         "Excellence, Sustainability, and Unwavering Commitment to Quality",
-      image: "/src/assets/images/globalfoods.jpg",
+      image: "/images/globalfoods.jpg",
       cta1: "Explore Products",
       cta2: "Partner With Us",
     },
@@ -38,14 +56,14 @@ const Home = () => {
       title: "Premium Export Quality from Farm to Your Doorstep",
       subtitle:
         "ISO Certified • Global Excellence • Sustainable Trade Solutions",
-      image: "/src/assets/images/jasmine-rice.jpg",
+      image: "/images/jasmine-rice.jpg",
       cta1: "View Products",
       cta2: "Get Quote",
     },
     {
       title: "Trusted by Importers Worldwide",
       subtitle: "25+ Years of Excellence in International Trade",
-      image: "/src/assets/images/Middle-East-Map.jpg",
+      image: "/images/Middle-East-Map.jpg",
       cta1: "Global Markets",
       cta2: "Join Us",
     },
@@ -86,7 +104,7 @@ const Home = () => {
     {
       name: "Premium Basmati Rice ST24/ST25",
       category: "Rice",
-      image: "/src/assets/images/jasmine-rice.jpg",
+      image: "/images/jasmine-rice.jpg",
       description:
         "Export quality premium basmati rice varieties with superior taste and distinctive aroma",
       certifications: ["APEDA", "FSSAI", "ISO"],
@@ -95,7 +113,7 @@ const Home = () => {
     {
       name: "Natural Jaggery Blocks",
       category: "Sweeteners",
-      image: "/src/assets/images/pure-jaggery.jpg",
+      image: "/images/pure-jaggery.jpg",
       description: "Pure, chemical-free jaggery in small and large blocks",
       certifications: ["Organic", "FSSAI", "Natural"],
       href: "/products?product=jaggery",
@@ -103,7 +121,7 @@ const Home = () => {
     {
       name: "Fresh Garlic & Onion",
       category: "Vegetables",
-      image: "/src/assets/images/onion_garlic.jpeg",
+      image: "/images/onion_garlic.jpeg",
       description: "Premium quality fresh garlic and onions for global markets",
       certifications: ["Fresh", "APEDA", "Export Quality"],
       href: "/products?category=vegetables",
@@ -111,7 +129,7 @@ const Home = () => {
     {
       name: "Premium Spices Collection",
       category: "Spices",
-      image: "/src/assets/images/premium_spices.jpg",
+      image: "/images/premium_spices.jpg",
       description: "Cumin, Fenugreek, and authentic Indian spices",
       certifications: ["Pure", "FSSAI", "Traditional"],
       href: "/products?category=spices",
@@ -119,7 +137,7 @@ const Home = () => {
     {
       name: "Makhana & Millets",
       category: "Seeds & Grains",
-      image: "/src/assets/images/Makhana.jpg",
+      image: "/images/Makhana.jpg",
       description: "Nutritious pearl millets, sorghum, and premium makhana",
       certifications: ["Nutritious", "Natural", "Premium"],
       href: "/products?category=seeds",
@@ -127,7 +145,7 @@ const Home = () => {
     {
       name: "Scented Candles Collection",
       category: "Lifestyle",
-      image: "/src/assets/images/scented candles.webp",
+      image: "/images/scented candles.webp",
       description: "Premium lifestyle scented candles for global markets",
       certifications: ["Handcrafted", "Premium", "Export"],
       href: "/products?category=lifestyle",
@@ -178,6 +196,142 @@ const Home = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  // Quote form validation
+  const validateQuoteForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    // Name validation
+    if (!quoteFormData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    // Email validation
+    if (!quoteFormData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(quoteFormData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    // Phone validation
+    if (!quoteFormData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    }
+
+    // Company validation
+    if (!quoteFormData.company.trim()) {
+      newErrors.company = "Company name is required";
+    }
+
+    // Product validation
+    if (!quoteFormData.product.trim()) {
+      newErrors.product = "Product selection is required";
+    }
+
+    // Quantity validation
+    if (!quoteFormData.quantity.trim()) {
+      newErrors.quantity = "Quantity is required";
+    }
+
+    setQuoteErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Quote form input change handler
+  const handleQuoteInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setQuoteFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // Clear error when user starts typing
+    if (quoteErrors[name]) {
+      setQuoteErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  // Quote form submission
+  const handleQuoteSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setQuoteErrors({});
+    setQuoteSubmitError("");
+    setQuoteSuccess(false);
+
+    // Validate form before submission
+    if (!validateQuoteForm()) {
+      return;
+    }
+
+    setIsSubmittingQuote(true);
+
+    try {
+      const response = await api.submitQuote(quoteFormData);
+
+      if (response.success) {
+        setQuoteSuccess(true);
+        toast.success("Quote request submitted successfully!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+
+        // Reset form
+        setQuoteFormData({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          product: "",
+          quantity: "",
+          requirements: "",
+        });
+
+        // Close form after 3 seconds
+        setTimeout(() => {
+          setShowQuoteForm(false);
+          setQuoteSuccess(false);
+        }, 3000);
+      } else {
+        const errorMessage =
+          response.error || "Failed to submit quote request. Please try again.";
+        setQuoteSubmitError(errorMessage);
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      }
+    } catch (error) {
+      console.error("Quote submission error:", error);
+      const errorMessage = "Failed to submit quote request. Please try again.";
+      setQuoteSubmitError(errorMessage);
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } finally {
+      setIsSubmittingQuote(false);
+    }
+  };
 
   // Auto slide change
   useEffect(() => {
@@ -435,12 +589,18 @@ const Home = () => {
                       >
                         View Details
                       </Link>
-                      <Link
-                        to="/contact"
+                      <button
+                        onClick={() => {
+                          setQuoteFormData((prev) => ({
+                            ...prev,
+                            product: product.name,
+                          }));
+                          setShowQuoteForm(true);
+                        }}
                         className="px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors font-medium"
                       >
                         Get Quote
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </motion.div>
@@ -636,6 +796,218 @@ const Home = () => {
           </div>
         </section>
       </div>
+
+      {/* Quote Form Modal */}
+      {showQuoteForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-gray-900">
+                Request Quote
+              </h3>
+              <button
+                onClick={() => {
+                  setShowQuoteForm(false);
+                  setQuoteErrors({});
+                  setQuoteSubmitError("");
+                  setQuoteSuccess(false);
+                }}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+
+            {quoteSuccess ? (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="h-8 w-8 text-green-600" />
+                </div>
+                <h4 className="text-xl font-semibold text-gray-900 mb-2">
+                  Quote Request Submitted!
+                </h4>
+                <p className="text-gray-600">
+                  Thank you for your interest. We'll get back to you within 24
+                  hours.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleQuoteSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={quoteFormData.name}
+                    onChange={handleQuoteInputChange}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      quoteErrors.name ? "border-red-500" : "border-gray-300"
+                    }`}
+                    placeholder="Enter your full name"
+                  />
+                  {quoteErrors.name && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.name}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={quoteFormData.email}
+                    onChange={handleQuoteInputChange}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      quoteErrors.email ? "border-red-500" : "border-gray-300"
+                    }`}
+                    placeholder="Enter your email address"
+                  />
+                  {quoteErrors.email && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.email}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={quoteFormData.phone}
+                    onChange={handleQuoteInputChange}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      quoteErrors.phone ? "border-red-500" : "border-gray-300"
+                    }`}
+                    placeholder="Enter your phone number"
+                  />
+                  {quoteErrors.phone && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.phone}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Company Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="company"
+                    value={quoteFormData.company}
+                    onChange={handleQuoteInputChange}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      quoteErrors.company ? "border-red-500" : "border-gray-300"
+                    }`}
+                    placeholder="Enter your company name"
+                  />
+                  {quoteErrors.company && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.company}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Product *
+                  </label>
+                  <input
+                    type="text"
+                    name="product"
+                    value={quoteFormData.product}
+                    onChange={handleQuoteInputChange}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      quoteErrors.product ? "border-red-500" : "border-gray-300"
+                    }`}
+                    placeholder="Product name"
+                    readOnly
+                  />
+                  {quoteErrors.product && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.product}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Quantity *
+                  </label>
+                  <input
+                    type="text"
+                    name="quantity"
+                    value={quoteFormData.quantity}
+                    onChange={handleQuoteInputChange}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      quoteErrors.quantity
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                    placeholder="e.g., 1000 kg, 50 tons"
+                  />
+                  {quoteErrors.quantity && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.quantity}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Additional Requirements
+                  </label>
+                  <textarea
+                    name="requirements"
+                    value={quoteFormData.requirements}
+                    onChange={handleQuoteInputChange}
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    placeholder="Any specific requirements or questions..."
+                  />
+                </div>
+
+                {quoteSubmitError && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                    <p className="text-red-600 text-sm">{quoteSubmitError}</p>
+                  </div>
+                )}
+
+                <div className="flex space-x-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowQuoteForm(false);
+                      setQuoteErrors({});
+                      setQuoteSubmitError("");
+                      setQuoteSuccess(false);
+                    }}
+                    className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmittingQuote}
+                    className="flex-1 bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmittingQuote ? "Submitting..." : "Submit Quote"}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 };

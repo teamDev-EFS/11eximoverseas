@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import {
   MapPin,
   Phone,
@@ -8,10 +9,29 @@ import {
   Linkedin,
   Facebook,
   Youtube,
+  X,
+  CheckCircle,
 } from "lucide-react";
+import { api } from "../services/api";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [showQuoteForm, setShowQuoteForm] = useState(false);
+  const [quoteFormData, setQuoteFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    product: "",
+    quantity: "",
+    requirements: "",
+  });
+  const [quoteErrors, setQuoteErrors] = useState<Record<string, string>>({});
+  const [quoteSubmitError, setQuoteSubmitError] = useState("");
+  const [isSubmittingQuote, setIsSubmittingQuote] = useState(false);
+  const [quoteSuccess, setQuoteSuccess] = useState(false);
 
   const topProducts = [
     {
@@ -44,6 +64,142 @@ const Footer = () => {
     },
     { name: "Scented Candles", emoji: "🕯️", href: "/products?product=candles" },
   ];
+
+  // Quote form validation
+  const validateQuoteForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    // Name validation
+    if (!quoteFormData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    // Email validation
+    if (!quoteFormData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(quoteFormData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    // Phone validation
+    if (!quoteFormData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    }
+
+    // Company validation
+    if (!quoteFormData.company.trim()) {
+      newErrors.company = "Company name is required";
+    }
+
+    // Product validation
+    if (!quoteFormData.product.trim()) {
+      newErrors.product = "Product selection is required";
+    }
+
+    // Quantity validation
+    if (!quoteFormData.quantity.trim()) {
+      newErrors.quantity = "Quantity is required";
+    }
+
+    setQuoteErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Quote form input change handler
+  const handleQuoteInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setQuoteFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // Clear error when user starts typing
+    if (quoteErrors[name]) {
+      setQuoteErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  // Quote form submission
+  const handleQuoteSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setQuoteErrors({});
+    setQuoteSubmitError("");
+    setQuoteSuccess(false);
+
+    // Validate form before submission
+    if (!validateQuoteForm()) {
+      return;
+    }
+
+    setIsSubmittingQuote(true);
+
+    try {
+      const response = await api.submitQuote(quoteFormData);
+
+      if (response.success) {
+        setQuoteSuccess(true);
+        toast.success("Quote request submitted successfully!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+
+        // Reset form
+        setQuoteFormData({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          product: "",
+          quantity: "",
+          requirements: "",
+        });
+
+        // Close form after 3 seconds
+        setTimeout(() => {
+          setShowQuoteForm(false);
+          setQuoteSuccess(false);
+        }, 3000);
+      } else {
+        const errorMessage =
+          response.error || "Failed to submit quote request. Please try again.";
+        setQuoteSubmitError(errorMessage);
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      }
+    } catch (error) {
+      console.error("Quote submission error:", error);
+      const errorMessage = "Failed to submit quote request. Please try again.";
+      setQuoteSubmitError(errorMessage);
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } finally {
+      setIsSubmittingQuote(false);
+    }
+  };
 
   return (
     <footer className="bg-neutral-900 text-white relative overflow-hidden">
@@ -270,12 +426,18 @@ const Footer = () => {
                 Ready to explore global trade?
               </h5>
               <div className="flex flex-col space-y-2">
-                <Link
-                  to="/contact"
+                <button
+                  onClick={() => {
+                    setQuoteFormData((prev) => ({
+                      ...prev,
+                      product: "General Inquiry",
+                    }));
+                    setShowQuoteForm(true);
+                  }}
                   className="text-sm bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700 transition-colors text-center"
                 >
                   Request Quote
-                </Link>
+                </button>
                 <Link
                   to="/partnerships"
                   className="text-sm border border-primary-600 text-primary-400 px-4 py-2 rounded hover:bg-primary-600/10 transition-colors text-center"
@@ -318,6 +480,218 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
+      {/* Quote Form Modal */}
+      {showQuoteForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-gray-900">
+                Request Quote
+              </h3>
+              <button
+                onClick={() => {
+                  setShowQuoteForm(false);
+                  setQuoteErrors({});
+                  setQuoteSubmitError("");
+                  setQuoteSuccess(false);
+                }}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+
+            {quoteSuccess ? (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="h-8 w-8 text-green-600" />
+                </div>
+                <h4 className="text-xl font-semibold text-gray-900 mb-2">
+                  Quote Request Submitted!
+                </h4>
+                <p className="text-gray-600">
+                  Thank you for your interest. We'll get back to you within 24
+                  hours.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleQuoteSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={quoteFormData.name}
+                    onChange={handleQuoteInputChange}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      quoteErrors.name ? "border-red-500" : "border-gray-300"
+                    }`}
+                    placeholder="Enter your full name"
+                  />
+                  {quoteErrors.name && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.name}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={quoteFormData.email}
+                    onChange={handleQuoteInputChange}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      quoteErrors.email ? "border-red-500" : "border-gray-300"
+                    }`}
+                    placeholder="Enter your email address"
+                  />
+                  {quoteErrors.email && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.email}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={quoteFormData.phone}
+                    onChange={handleQuoteInputChange}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      quoteErrors.phone ? "border-red-500" : "border-gray-300"
+                    }`}
+                    placeholder="Enter your phone number"
+                  />
+                  {quoteErrors.phone && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.phone}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Company Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="company"
+                    value={quoteFormData.company}
+                    onChange={handleQuoteInputChange}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      quoteErrors.company ? "border-red-500" : "border-gray-300"
+                    }`}
+                    placeholder="Enter your company name"
+                  />
+                  {quoteErrors.company && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.company}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Product *
+                  </label>
+                  <input
+                    type="text"
+                    name="product"
+                    value={quoteFormData.product}
+                    onChange={handleQuoteInputChange}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      quoteErrors.product ? "border-red-500" : "border-gray-300"
+                    }`}
+                    placeholder="Product name"
+                    readOnly
+                  />
+                  {quoteErrors.product && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.product}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Quantity *
+                  </label>
+                  <input
+                    type="text"
+                    name="quantity"
+                    value={quoteFormData.quantity}
+                    onChange={handleQuoteInputChange}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                      quoteErrors.quantity
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                    placeholder="e.g., 1000 kg, 50 tons"
+                  />
+                  {quoteErrors.quantity && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.quantity}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Additional Requirements
+                  </label>
+                  <textarea
+                    name="requirements"
+                    value={quoteFormData.requirements}
+                    onChange={handleQuoteInputChange}
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    placeholder="Any specific requirements or questions..."
+                  />
+                </div>
+
+                {quoteSubmitError && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                    <p className="text-red-600 text-sm">{quoteSubmitError}</p>
+                  </div>
+                )}
+
+                <div className="flex space-x-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowQuoteForm(false);
+                      setQuoteErrors({});
+                      setQuoteSubmitError("");
+                      setQuoteSuccess(false);
+                    }}
+                    className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmittingQuote}
+                    className="flex-1 bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmittingQuote ? "Submitting..." : "Submit Quote"}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </footer>
   );
 };

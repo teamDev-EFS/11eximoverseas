@@ -43,9 +43,9 @@ const ProductDetail = () => {
       name: "Premium Basmati Rice ST24/ST25",
       category: "Rice",
       images: [
-        "/src/assets/images/jasmine-rice.jpg",
-        "/src/assets/images/rice.jpeg",
-        "/src/assets/images/white-rice.jpg",
+        "/images/jasmine-rice.jpg",
+        "/images/rice.jpeg",
+        "/images/white-rice.jpg",
       ],
       description:
         "Premium long-grain basmati rice with exceptional aroma and taste, perfect for international markets. Our ST24 variety is carefully selected from the finest paddy fields and processed using advanced technology to maintain its natural fragrance and nutritional value.",
@@ -91,9 +91,9 @@ const ProductDetail = () => {
       name: "Natural Jaggery Blocks",
       category: "Sweeteners",
       images: [
-        "/src/assets/images/pure-jaggery.jpg",
-        "/src/assets/images/jaggery-powder.jpg",
-        "/src/assets/images/pure jaggery webp.webp",
+        "/images/pure-jaggery.jpg",
+        "/images/jaggery-powder.jpg",
+        "/images/pure jaggery webp.webp",
       ],
       description:
         "Pure, chemical-free jaggery in small and large blocks, perfect for health-conscious consumers. Made from pure sugarcane juice using traditional methods.",
@@ -138,10 +138,7 @@ const ProductDetail = () => {
       id: "3",
       name: "Fresh Garlic & Onion",
       category: "Vegetables",
-      images: [
-        "/src/assets/images/onion_garlic.jpeg",
-        "/src/assets/images/oniongarlic.jpeg",
-      ],
+      images: ["/images/onion_garlic.jpeg", "/images/oniongarlic.jpeg"],
       description:
         "Premium quality fresh garlic and onions for global markets with extended shelf life. Carefully selected and processed to maintain freshness.",
       longDescription: `Our Fresh Garlic & Onion collection features premium quality produce sourced directly from trusted farmers. Each batch undergoes rigorous quality checks to ensure freshness, size consistency, and extended shelf life.
@@ -185,10 +182,7 @@ const ProductDetail = () => {
       id: "4",
       name: "Premium Spices Collection",
       category: "Spices",
-      images: [
-        "/src/assets/images/premium_spices.jpg",
-        "/src/assets/images/lentils.jpg",
-      ],
+      images: ["/images/premium_spices.jpg", "/images/lentils.jpg"],
       description:
         "Cumin, Fenugreek, and authentic Indian spices with rich aroma and flavor. Carefully sourced and processed to maintain their natural properties.",
       longDescription: `Our Premium Spices Collection brings together the finest Indian spices, each carefully selected for their aroma, flavor, and quality. From the aromatic cumin seeds to the distinctive fenugreek, each spice is processed using traditional methods while meeting modern quality standards.
@@ -232,10 +226,7 @@ const ProductDetail = () => {
       id: "5",
       name: "Makhana & Millets",
       category: "Grains",
-      images: [
-        "/src/assets/images/Makhana.jpg",
-        "/src/assets/images/lentils.jpg",
-      ],
+      images: ["/images/Makhana.jpg", "/images/lentils.jpg"],
       description:
         "Nutritious pearl millets, sorghum, and premium makhana for health food markets. Rich in nutrients and perfect for health-conscious consumers.",
       longDescription: `Our Makhana & Millets collection features premium quality grains that are not only nutritious but also versatile in culinary applications. Makhana (fox nuts) are known for their health benefits and are a popular snack in India.
@@ -279,10 +270,7 @@ const ProductDetail = () => {
       id: "6",
       name: "Scented Candles Collection",
       category: "Lifestyle",
-      images: [
-        "/src/assets/images/scented candles.webp",
-        "/src/assets/images/fragrance-candles.jpg",
-      ],
+      images: ["/images/scented candles.webp", "/images/fragrance-candles.jpg"],
       description:
         "Premium lifestyle scented candles for global markets with exotic fragrances. Handcrafted with natural ingredients for a luxurious experience.",
       longDescription: `Our Scented Candles Collection features handcrafted candles made with natural ingredients and exotic fragrances. Each candle is carefully crafted to provide a luxurious and aromatic experience.
@@ -331,31 +319,31 @@ const ProductDetail = () => {
     {
       id: "2",
       name: "Natural Jaggery Blocks",
-      image: "/src/assets/images/pure-jaggery.jpg",
+      image: "/images/pure-jaggery.jpg",
       category: "Sweeteners",
     },
     {
       id: "3",
       name: "Fresh Garlic & Onion",
-      image: "/src/assets/images/onion_garlic.jpeg",
+      image: "/images/onion_garlic.jpeg",
       category: "Vegetables",
     },
     {
       id: "4",
       name: "Premium Spices Collection",
-      image: "/src/assets/images/premium_spices.jpg",
+      image: "/images/premium_spices.jpg",
       category: "Spices",
     },
     {
       id: "5",
       name: "Makhana & Millets",
-      image: "/src/assets/images/Makhana.jpg",
+      image: "/images/Makhana.jpg",
       category: "Grains",
     },
     {
       id: "6",
       name: "Scented Candles Collection",
-      image: "/src/assets/images/scented candles.webp",
+      image: "/images/scented candles.webp",
       category: "Lifestyle",
     },
   ]

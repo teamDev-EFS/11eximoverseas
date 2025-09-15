@@ -53,7 +53,12 @@ const corsOptions = {
       process.env.CORS_ORIGIN || "http://localhost:5173"
     ).split(",");
 
+    console.log("Incoming Origin:", origin);
+    console.log("Allowed Origins (from env):", allowedOrigins);
+    console.log("CORS_ORIGIN env var:", process.env.CORS_ORIGIN);
+
     if (allowedOrigins.includes(origin)) {
+      console.log("CORS: Origin allowed");
       callback(null, true);
     } else {
       console.log("CORS blocked origin:", origin);

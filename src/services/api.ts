@@ -1,7 +1,5 @@
 // API Configuration
-const API_BASE_URL =
-  (import.meta as any).env?.VITE_API_URL ||
-  "https://one1eximoverseas.onrender.com/api";
+const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || "/api";
 
 // API Response Types
 interface ApiResponse<T = any> {

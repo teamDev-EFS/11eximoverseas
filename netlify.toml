@@ -8,7 +8,6 @@
 
 [build.environment]
   # Frontend Environment Variables for Netlify
-  VITE_API_URL = "https://one1eximoverseas.onrender.com/api"
   VITE_APP_NAME = "The11EximOverSeas Ventures"
   VITE_APP_VERSION = "1.0.0"
   VITE_CONTACT_EMAIL = "the11eximoverseas@gmail.com"
