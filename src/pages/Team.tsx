@@ -1,5 +1,5 @@
 import {
-  Linkedin,
+  Linkedin as LinkedinIcon,
   Mail,
   Award,
   Users,
@@ -27,6 +27,8 @@ const Team = () => {
     phone: "",
     company: "",
     message: "",
+    subject: "Team Contact Inquiry",
+    inquiryType: "General",
   });
   const [contactErrors, setContactErrors] = useState<Record<string, string>>(
     {}
@@ -52,7 +54,7 @@ const Team = () => {
       instagram:
         "https://www.instagram.com/the11exim/?utm_source=qr&igsh=NXFjc2wybzZvZXBr#",
       youtube: "https://www.youtube.com/@THE11EXIMOVERSEAS-t1n",
-      facebook: "https://www.facebook.com/the11eximoverseas",
+      facebook: "https://www.facebook.com/share/1YbXjW83Ge/",
       twitter: "https://www.twitter.com/the11exim",
       email: "hukam@the11eximoverseas.com",
       achievements: [
@@ -77,7 +79,7 @@ const Team = () => {
       instagram:
         "https://www.instagram.com/the11exim/?utm_source=qr&igsh=NXFjc2wybzZvZXBr#",
       youtube: "https://www.youtube.com/@THE11EXIMOVERSEAS-t1n",
-      facebook: "https://www.facebook.com/the11eximoverseas",
+      facebook: "https://www.facebook.com/share/1YbXjW83Ge/",
       twitter: "https://www.twitter.com/the11exim",
       email: "yawal@the11eximoverseas.com",
       achievements: [
@@ -204,6 +206,8 @@ const Team = () => {
           phone: "",
           company: "",
           message: "",
+          subject: "Team Contact Inquiry",
+          inquiryType: "General",
         });
 
         setTimeout(() => {
@@ -338,7 +342,7 @@ const Team = () => {
                       className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all duration-300"
                       aria-label={`${member.name} LinkedIn`}
                     >
-                      <Linkedin className="h-5 w-5" />
+                      <LinkedinIcon className="h-5 w-5" />
                     </a>
                     <a
                       href={member.instagram}
@@ -367,7 +371,6 @@ const Team = () => {
                     >
                       <Facebook className="h-5 w-5" />
                     </a>
-
                     <a
                       href={`mailto:${member.email}`}
                       className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all duration-300"
