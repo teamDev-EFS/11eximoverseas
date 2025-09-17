@@ -143,6 +143,42 @@ const Home = () => {
       href: "/products?category=seeds",
     },
     {
+      name: "Fenugreek Seeds",
+      category: "Spices",
+      image: "/images/fenugreek seeds.jpg",
+      description:
+        "Premium quality fenugreek seeds with rich aroma and nutritional benefits",
+      certifications: ["FSSAI", "Organic", "Premium Grade"],
+      href: "/products?product=fenugreek",
+    },
+    {
+      name: "Pearl Millets",
+      category: "Grains",
+      image: "/images/Pearl millets.webp",
+      description:
+        "Nutritious pearl millets with high protein content and gluten-free properties",
+      certifications: ["Organic", "Gluten-Free", "High Protein"],
+      href: "/products?product=pearl-millets",
+    },
+    {
+      name: "Sorghum Seeds (Jowar)",
+      category: "Grains",
+      image: "/images/sorghum seeds.webp",
+      description:
+        "Premium sorghum seeds with excellent nutritional profile and drought-resistant properties",
+      certifications: ["Organic", "Drought-Resistant", "High Nutrition"],
+      href: "/products?product=jowar",
+    },
+    {
+      name: "Jeera (Cumin Seeds)",
+      category: "Spices",
+      image: "/images/Jeera.jpg",
+      description:
+        "Premium cumin seeds with distinctive aroma and flavor for authentic cuisines",
+      certifications: ["FSSAI", "Premium Grade", "Authentic"],
+      href: "/products?product=jeera",
+    },
+    {
       name: "Scented Candles Collection",
       category: "Lifestyle",
       image: "/images/scented candles.webp",

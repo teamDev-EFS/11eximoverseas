@@ -310,6 +310,187 @@ const ProductDetail = () => {
         "Perfect for Gifting",
       ],
     },
+    "7": {
+      id: "7",
+      name: "Fenugreek Seeds",
+      category: "Spices",
+      images: ["/images/fenugreek seeds.jpg"],
+      description:
+        "Premium quality fenugreek seeds with rich aroma and nutritional benefits, perfect for culinary and medicinal use. Sourced from the finest farms in India.",
+      longDescription: `Our Fenugreek Seeds are carefully selected from premium farms across India, known for producing the highest quality fenugreek. These seeds are rich in essential nutrients and have been used in traditional Indian cuisine and Ayurvedic medicine for centuries.
+
+      Fenugreek seeds are known for their distinctive bitter-sweet taste and aromatic properties. They are an essential ingredient in Indian spice blends and are also valued for their medicinal properties, including blood sugar regulation and digestive health benefits.
+
+      Our fenugreek seeds are processed using traditional methods to preserve their natural aroma and nutritional value, making them perfect for both culinary and health applications.`,
+      certifications: ["FSSAI", "Organic", "Premium Grade", "Traditional"],
+      specifications: {
+        Purity: "99.5%",
+        "Moisture Content": "<8%",
+        "Foreign Matter": "<0.5%",
+        "Shelf Life": "24 months",
+        Packaging: "25kg, 50kg bags",
+        Color: "Yellowish-brown",
+      },
+      nutritionalInfo: {
+        Energy: "323 kcal/100g",
+        Protein: "23g/100g",
+        Carbohydrates: "58g/100g",
+        Fat: "6.4g/100g",
+        Fiber: "25g/100g",
+        Iron: "33mg/100g",
+      },
+      origin: "Rajasthan, India",
+      minimumOrder: "500 kg",
+      packaging: "Food-grade packaging available",
+      shelfLife: "24 months",
+      storageConditions: "Store in cool, dry place away from moisture",
+      popularity: 82,
+      features: [
+        "Rich Aroma and Flavor",
+        "High Nutritional Value",
+        "Traditional Processing",
+        "Medicinal Properties",
+        "Culinary Versatility",
+        "Export Quality Standards",
+      ],
+    },
+    "8": {
+      id: "8",
+      name: "Pearl Millets",
+      category: "Grains",
+      images: ["/images/Pearl millets.webp"],
+      description:
+        "Nutritious pearl millets with high protein content and gluten-free properties, ideal for health-conscious consumers and sustainable agriculture.",
+      longDescription: `Our Pearl Millets are sourced from sustainable farms and are known for their exceptional nutritional profile and drought-resistant properties. These ancient grains have been a staple in Indian diets for centuries and are now gaining global recognition for their health benefits.
+
+      Pearl millets are naturally gluten-free and rich in protein, fiber, and essential minerals. They are particularly high in iron, magnesium, and phosphorus, making them an excellent choice for health-conscious consumers and those with dietary restrictions.
+
+      Our millets are processed using modern techniques while maintaining their natural nutritional value, making them perfect for various culinary applications including bread, porridge, and traditional Indian dishes.`,
+      certifications: ["Organic", "Gluten-Free", "High Protein", "Sustainable"],
+      specifications: {
+        "Protein Content": "11-12%",
+        "Moisture Content": "<12%",
+        "Foreign Matter": "<1%",
+        "Shelf Life": "12 months",
+        Packaging: "25kg, 50kg bags",
+        Color: "Pearl white to light yellow",
+      },
+      nutritionalInfo: {
+        Energy: "378 kcal/100g",
+        Protein: "11g/100g",
+        Carbohydrates: "73g/100g",
+        Fat: "4.2g/100g",
+        Fiber: "8.5g/100g",
+        Iron: "8mg/100g",
+      },
+      origin: "Rajasthan, India",
+      minimumOrder: "1000 kg",
+      packaging: "Food-grade packaging available",
+      shelfLife: "12 months",
+      storageConditions: "Store in cool, dry place away from pests",
+      popularity: 75,
+      features: [
+        "Gluten-Free",
+        "High Protein Content",
+        "Rich in Minerals",
+        "Drought-Resistant",
+        "Sustainable Agriculture",
+        "Versatile Culinary Use",
+      ],
+    },
+    "9": {
+      id: "9",
+      name: "Sorghum Seeds (Jowar)",
+      category: "Grains",
+      images: ["/images/sorghum seeds.webp"],
+      description:
+        "Premium sorghum seeds with excellent nutritional profile and drought-resistant properties for sustainable agriculture and health food markets.",
+      longDescription: `Our Sorghum Seeds (Jowar) are carefully selected from the finest farms and are known for their exceptional drought-resistant properties and nutritional benefits. Sorghum is one of the most sustainable crops, requiring minimal water and providing maximum nutrition.
+
+      These seeds are rich in antioxidants, protein, and fiber, making them an excellent choice for health-conscious consumers. Sorghum is naturally gluten-free and has a mild, nutty flavor that works well in various culinary applications.
+
+      Our sorghum seeds are processed using traditional methods to preserve their natural nutritional value and are perfect for making flour, porridge, and other healthy food products.`,
+      certifications: [
+        "Organic",
+        "Drought-Resistant",
+        "High Nutrition",
+        "Sustainable",
+      ],
+      specifications: {
+        "Protein Content": "10-11%",
+        "Moisture Content": "<12%",
+        "Foreign Matter": "<1%",
+        "Shelf Life": "12 months",
+        Packaging: "25kg, 50kg bags",
+        Color: "White to cream",
+      },
+      nutritionalInfo: {
+        Energy: "339 kcal/100g",
+        Protein: "10g/100g",
+        Carbohydrates: "75g/100g",
+        Fat: "3.4g/100g",
+        Fiber: "6.3g/100g",
+        Iron: "4.4mg/100g",
+      },
+      origin: "Maharashtra, India",
+      minimumOrder: "1000 kg",
+      packaging: "Food-grade packaging available",
+      shelfLife: "12 months",
+      storageConditions: "Store in cool, dry place away from pests",
+      popularity: 70,
+      features: [
+        "Drought-Resistant",
+        "High Nutritional Value",
+        "Gluten-Free",
+        "Sustainable Agriculture",
+        "Rich in Antioxidants",
+        "Versatile Processing",
+      ],
+    },
+    "10": {
+      id: "10",
+      name: "Jeera (Cumin Seeds)",
+      category: "Spices",
+      images: ["/images/Jeera.jpg"],
+      description:
+        "Premium cumin seeds with distinctive aroma and flavor, essential for authentic Indian and international cuisines. Sourced from the finest spice-growing regions.",
+      longDescription: `Our Jeera (Cumin Seeds) are sourced from the premium spice-growing regions of India, known for producing the most aromatic and flavorful cumin seeds. These seeds are an essential ingredient in Indian cuisine and are highly valued in international markets.
+
+      Cumin seeds are known for their distinctive warm, earthy aroma and slightly bitter taste. They are rich in essential oils and have been used for centuries in traditional medicine for their digestive and health benefits.
+
+      Our cumin seeds are carefully processed to maintain their natural aroma and flavor profile, making them perfect for spice blends, tempering, and various culinary applications. They are also valued for their medicinal properties and are used in traditional Ayurvedic preparations.`,
+      certifications: ["FSSAI", "Premium Grade", "Authentic", "Traditional"],
+      specifications: {
+        Purity: "99.5%",
+        "Moisture Content": "<8%",
+        "Foreign Matter": "<0.5%",
+        "Shelf Life": "24 months",
+        Packaging: "25kg, 50kg bags",
+        Color: "Brown to dark brown",
+      },
+      nutritionalInfo: {
+        Energy: "375 kcal/100g",
+        Protein: "18g/100g",
+        Carbohydrates: "44g/100g",
+        Fat: "22g/100g",
+        Fiber: "11g/100g",
+        Iron: "66mg/100g",
+      },
+      origin: "Gujarat, India",
+      minimumOrder: "500 kg",
+      packaging: "Food-grade packaging available",
+      shelfLife: "24 months",
+      storageConditions: "Store in cool, dry place away from light",
+      popularity: 90,
+      features: [
+        "Distinctive Aroma",
+        "Authentic Flavor",
+        "Premium Grade Quality",
+        "Rich in Essential Oils",
+        "Medicinal Properties",
+        "Culinary Versatility",
+      ],
+    },
   };
 
   const product =

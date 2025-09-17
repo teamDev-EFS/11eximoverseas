@@ -258,6 +258,54 @@ const Products = () => {
       features: ["Handmade", "Exotic Fragrances", "Premium Quality"],
       tags: ["Handmade", "Premium", "Lifestyle"],
     },
+    {
+      id: 7,
+      name: "Fenugreek Seeds",
+      description:
+        "Premium quality fenugreek seeds with rich aroma and nutritional benefits, perfect for culinary and medicinal use",
+      image: "/images/fenugreek seeds.jpg",
+      category: "Spices",
+      certifications: ["FSSAI", "Organic", "Premium Grade"],
+      rating: 4.7,
+      features: ["Rich Aroma", "High Nutrition", "Premium Quality"],
+      tags: ["Spices", "Organic", "Nutritional"],
+    },
+    {
+      id: 8,
+      name: "Pearl Millets",
+      description:
+        "Nutritious pearl millets with high protein content and gluten-free properties, ideal for health-conscious consumers",
+      image: "/images/Pearl millets.webp",
+      category: "Grains",
+      certifications: ["Organic", "Gluten-Free", "High Protein"],
+      rating: 4.6,
+      features: ["Gluten-Free", "High Protein", "Nutritious"],
+      tags: ["Grains", "Organic", "Healthy"],
+    },
+    {
+      id: 9,
+      name: "Sorghum Seeds (Jowar)",
+      description:
+        "Premium sorghum seeds with excellent nutritional profile and drought-resistant properties for sustainable agriculture",
+      image: "/images/sorghum seeds.webp",
+      category: "Grains",
+      certifications: ["Organic", "Drought-Resistant", "High Nutrition"],
+      rating: 4.5,
+      features: ["Drought-Resistant", "High Nutrition", "Sustainable"],
+      tags: ["Grains", "Organic", "Sustainable"],
+    },
+    {
+      id: 10,
+      name: "Jeera (Cumin Seeds)",
+      description:
+        "Premium cumin seeds with distinctive aroma and flavor, essential for authentic Indian and international cuisines",
+      image: "/images/Jeera.jpg",
+      category: "Spices",
+      certifications: ["FSSAI", "Premium Grade", "Authentic"],
+      rating: 4.8,
+      features: ["Distinctive Aroma", "Authentic Flavor", "Premium Grade"],
+      tags: ["Spices", "Authentic", "Aromatic"],
+    },
   ];
 
   const categories = [
