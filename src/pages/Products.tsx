@@ -360,9 +360,10 @@ const Products = () => {
   return (
     <>
       <SEO
-        title="Premium Agricultural Products - The11EximOverSeas"
-        description="Explore our comprehensive range of premium agricultural products including rice, spices, jaggery, vegetables, and lifestyle products. Quality-assured for global markets."
-        keywords="agricultural products, premium rice, spices, jaggery, vegetables, lifestyle products, export quality, global markets, India agricultural exports"
+        title="Top Agro Export Products from India by The 11 Exim Overseas | Premium Agricultural Products"
+        description="Discover The 11 Exim Overseas' comprehensive range of premium agricultural products including rice, spices, jaggery, vegetables, and lifestyle products. Export quality guaranteed for global markets."
+        keywords="The 11 Exim Overseas, 11 Exim Overseas, Exim Overseas India, top agro export products India, agricultural products, premium rice, spices, jaggery, vegetables, lifestyle products, export quality, global markets, India agricultural exports, basmati rice, organic products"
+        url="https://the11eximoverseas.com/products"
       />
       <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-primary-50/30">
         {/* Hero Section */}
@@ -376,7 +377,7 @@ const Products = () => {
               className="text-center max-w-4xl mx-auto"
             >
               <h1 className="text-5xl lg:text-7xl font-display font-bold text-gradient mb-8 text-balance">
-                Premium Product Portfolio
+                Top Agro Export Products from India by The 11 Exim Overseas
               </h1>
               <p className="text-xl text-neutral-600 mb-12 leading-relaxed text-balance">
                 Discover our carefully curated selection of premium agricultural
@@ -483,7 +484,7 @@ const Products = () => {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className={`group ${viewMode === "list" ? "flex gap-6" : ""}`}
                 >
-                  <div className="card-premium p-6 h-full hover:scale-105 transition-all duration-500">
+                  <div className="card-premium p-6 h-full hover:shadow-glow hover:-translate-y-1 transition-all duration-500">
                     {/* Product Image */}
                     <div
                       className={`relative overflow-hidden rounded-2xl mb-6 ${
@@ -494,7 +495,7 @@ const Products = () => {
                     >
                       <img
                         src={product.image}
-                        alt={product.name}
+                        alt={`${product.name} by The 11 Exim Overseas - Premium ${product.category} for Global Export`}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                       <div className="absolute top-4 left-4">

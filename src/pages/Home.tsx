@@ -380,9 +380,10 @@ const Home = () => {
   return (
     <>
       <SEO
-        title="The11EximOverSeas - Premium Agricultural Products Export"
-        description="Connecting India's finest agricultural products to global markets with excellence, sustainability, and unwavering commitment to quality. Premium rice, spices, jaggery, and more."
-        keywords="agricultural exports, premium rice, spices, jaggery, global trade, India exports, agricultural products, international trade, basmati rice, organic products"
+        title="The 11 Exim Overseas | India's Premier Agro Exporter | Global Trade & Partnerships"
+        description="The 11 Exim Overseas is a leading agro-export company from India, connecting premium agricultural products to global markets with excellence, sustainability, and trust. Export quality rice, spices, jaggery & more."
+        keywords="The 11 Exim Overseas, 11 Exim Overseas, Exim Overseas India, agricultural exports, premium rice, spices, jaggery, global trade, India exports, agricultural products, international trade, basmati rice, organic products, agro exporter India"
+        url="https://the11eximoverseas.com"
       />
       <div className="relative">
         {/* Hero Section with Carousel */}
@@ -412,7 +413,9 @@ const Home = () => {
                     className="max-w-5xl mx-auto"
                   >
                     <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold mb-6 lg:mb-8 leading-tight text-balance">
-                      {slide.title}
+                      {index === 0
+                        ? "The 11 Exim Overseas – India's Global Agro Export Leader"
+                        : slide.title}
                     </h1>
                     <motion.p
                       initial={{ opacity: 0, y: 30 }}
@@ -518,7 +521,7 @@ const Home = () => {
                 className="max-w-4xl mx-auto"
               >
                 <h2 className="text-4xl lg:text-6xl font-display font-bold text-gradient mb-8 text-balance">
-                  Why Choose The11EximOverSeas?
+                  Why Choose The 11 Exim Overseas?
                 </h2>
                 <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed text-balance">
                   We combine decades of experience with cutting-edge technology
@@ -592,7 +595,7 @@ const Home = () => {
                   <div className="relative h-64 overflow-hidden">
                     <img
                       src={product.image}
-                      alt={product.name}
+                      alt={`${product.name} by The 11 Exim Overseas - Premium ${product.category} for Global Export`}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-4 left-4">
@@ -725,7 +728,7 @@ const Home = () => {
               <div className="relative">
                 <img
                   src="/images/globalfoods.jpg"
-                  alt="Global Trade"
+                  alt="The 11 Exim Overseas Global Trade Network - Premium Agricultural Products Export to International Markets"
                   className="w-full h-96 object-cover rounded-2xl"
                 />
                 <div className="absolute inset-0 bg-primary-600/20 rounded-2xl"></div>

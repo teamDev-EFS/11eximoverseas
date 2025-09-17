@@ -17,6 +17,7 @@ import { motion } from "framer-motion";
 import { api } from "../services/api";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SEO from "../components/SEO";
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -670,532 +671,587 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Breadcrumb */}
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <Link to="/" className="hover:text-primary-600">
-              Home
-            </Link>
-            <span>/</span>
-            <Link to="/products" className="hover:text-primary-600">
-              Products
-            </Link>
-            <span>/</span>
-            <span className="text-gray-900">{product.name}</span>
+    <>
+      <SEO
+        title={`${
+          product?.name || "Product"
+        } | The 11 Exim Overseas | Premium Agricultural Export`}
+        description={`${
+          product?.description || "Premium agricultural product"
+        } from The 11 Exim Overseas. Export quality ${
+          product?.category?.toLowerCase() || "agricultural product"
+        } with full certifications and global delivery.`}
+        keywords={`The 11 Exim Overseas, 11 Exim Overseas, Exim Overseas India, ${
+          product?.name || "product"
+        }, ${
+          product?.category?.toLowerCase() || "agricultural product"
+        }, export quality, premium agricultural products, India exports, global trade`}
+        url={`https://the11eximoverseas.com/products/${id}`}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: product?.name || "Agricultural Product",
+          description: product?.description || "Premium agricultural product",
+          category: product?.category || "Agricultural Products",
+          brand: {
+            "@type": "Brand",
+            name: "The 11 Exim Overseas",
+          },
+          offers: {
+            "@type": "Offer",
+            availability: "https://schema.org/InStock",
+            priceCurrency: "USD",
+            seller: {
+              "@type": "Organization",
+              name: "The 11 Exim Overseas",
+            },
+          },
+        }}
+      />
+      <div className="min-h-screen bg-gray-50">
+        {/* Breadcrumb */}
+        <div className="bg-white border-b">
+          <div className="max-w-7xl mx-auto px-4 py-4">
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <Link to="/" className="hover:text-primary-600">
+                Home
+              </Link>
+              <span>/</span>
+              <Link to="/products" className="hover:text-primary-600">
+                Products
+              </Link>
+              <span>/</span>
+              <span className="text-gray-900">{product.name}</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Product Detail */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <Link
-          to="/products"
-          className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 mb-8 font-medium"
-        >
-          <ArrowLeft className="h-5 w-5" />
-          <span>Back to Products</span>
-        </Link>
+        {/* Product Detail */}
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <Link
+            to="/products"
+            className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 mb-8 font-medium"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            <span>Back to Products</span>
+          </Link>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          {/* Product Images */}
-          <div>
-            <div className="bg-white rounded-2xl overflow-hidden shadow-lg mb-4">
-              <img
-                src={product.images[selectedImage] || product.images[0]}
-                alt={product.name}
-                className="w-full h-96 object-cover"
-                onError={(e) => {
-                  console.error(
-                    "Image failed to load:",
-                    product.images[selectedImage] || product.images[0]
-                  );
-                  e.currentTarget.src = product.images[0];
-                }}
-              />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            {/* Product Images */}
+            <div>
+              <div className="bg-white rounded-2xl overflow-hidden shadow-lg mb-4">
+                <img
+                  src={product.images[selectedImage] || product.images[0]}
+                  alt={`${product.name} by The 11 Exim Overseas - Premium ${product.category} for Global Export`}
+                  className="w-full h-96 object-cover"
+                  onError={(e) => {
+                    console.error(
+                      "Image failed to load:",
+                      product.images[selectedImage] || product.images[0]
+                    );
+                    e.currentTarget.src = product.images[0];
+                  }}
+                />
+              </div>
+              {product.images.length > 1 && (
+                <div className="flex space-x-4">
+                  {product.images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImage(index)}
+                      className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
+                        selectedImage === index
+                          ? "border-primary-600"
+                          : "border-gray-200"
+                      }`}
+                    >
+                      <img
+                        src={image}
+                        alt={`${product.name} by The 11 Exim Overseas - Image ${
+                          index + 1
+                        }`}
+                        className="w-full h-full object-cover"
+                        onError={() => {
+                          console.error(
+                            "Thumbnail image failed to load:",
+                            image
+                          );
+                        }}
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
-            {product.images.length > 1 && (
-              <div className="flex space-x-4">
-                {product.images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImage(index)}
-                    className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
-                      selectedImage === index
-                        ? "border-primary-600"
+
+            {/* Product Info */}
+            <div>
+              <div className="flex items-center space-x-2 mb-4">
+                <span className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-medium">
+                  {product.category}
+                </span>
+                <div className="flex items-center space-x-1">
+                  <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                  <span className="text-sm text-gray-600">
+                    {product.popularity}% Popular
+                  </span>
+                </div>
+              </div>
+
+              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+                {product.name}
+              </h1>
+
+              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                {product.description}
+              </p>
+
+              {/* Key Features */}
+              <div className="mb-8">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                  Key Features
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {product.features.map((feature, index) => (
+                    <div key={index} className="flex items-center space-x-2">
+                      <CheckCircle className="h-5 w-5 text-primary-600" />
+                      <span className="text-gray-700">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Certifications */}
+              <div className="mb-8">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                  Certifications
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  {product.certifications.map((cert, index) => (
+                    <span
+                      key={index}
+                      className="bg-primary-100 text-primary-700 px-3 py-2 rounded-lg font-medium flex items-center space-x-2"
+                    >
+                      <Shield className="h-4 w-4" />
+                      <span>{cert}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quick Info */}
+              <div className="bg-gray-100 rounded-lg p-6 mb-8">
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="flex items-center space-x-3">
+                    <MapPin className="h-5 w-5 text-primary-600" />
+                    <div>
+                      <div className="text-sm text-gray-600">Origin</div>
+                      <div className="font-medium">{product.origin}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Package className="h-5 w-5 text-primary-600" />
+                    <div>
+                      <div className="text-sm text-gray-600">Min. Order</div>
+                      <div className="font-medium">{product.minimumOrder}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Calendar className="h-5 w-5 text-primary-600" />
+                    <div>
+                      <div className="text-sm text-gray-600">Shelf Life</div>
+                      <div className="font-medium">{product.shelfLife}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Truck className="h-5 w-5 text-primary-600" />
+                    <div>
+                      <div className="text-sm text-gray-600">Packaging</div>
+                      <div className="font-medium">Customizable</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button
+                  onClick={() => {
+                    setQuoteFormData((prev) => ({
+                      ...prev,
+                      product: product.name,
+                    }));
+                    setShowQuoteForm(true);
+                  }}
+                  className="flex-1 bg-primary-600 text-white py-4 px-6 rounded-lg hover:bg-primary-700 transition-colors font-semibold text-lg"
+                >
+                  Request Quote
+                </button>
+                <Link
+                  to="/contact"
+                  className="flex-1 border-2 border-primary-600 text-primary-600 py-4 px-6 rounded-lg hover:bg-primary-50 transition-colors font-semibold text-lg text-center"
+                >
+                  Contact Us
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Detailed Information Tabs */}
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-16">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8">
+              {/* Specifications */}
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                  Specifications
+                </h3>
+                <div className="space-y-4">
+                  {Object.entries(product.specifications).map(
+                    ([key, value]) => (
+                      <div
+                        key={key}
+                        className="flex justify-between items-center py-2 border-b border-gray-100"
+                      >
+                        <span className="text-gray-600">{key}:</span>
+                        <span className="font-medium text-gray-900">
+                          {value}
+                        </span>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+
+              {/* Nutritional Information */}
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                  Nutritional Info
+                </h3>
+                <div className="space-y-4">
+                  {Object.entries(product.nutritionalInfo).map(
+                    ([key, value]) => (
+                      <div
+                        key={key}
+                        className="flex justify-between items-center py-2 border-b border-gray-100"
+                      >
+                        <span className="text-gray-600">{key}:</span>
+                        <span className="font-medium text-gray-900">
+                          {value}
+                        </span>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+
+              {/* Storage & Handling */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h3 className="text-xl font-bold text-gray-900 mb-5 flex items-center">
+                  <Package className="h-5 w-5 text-primary-600 mr-2" />
+                  Storage & Handling
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h4 className="text-sm font-semibold text-gray-900 mb-2 flex items-center">
+                      <div className="w-2 h-2 bg-primary-500 rounded-full mr-2"></div>
+                      Storage Conditions
+                    </h4>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {product.storageConditions}
+                    </p>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h4 className="text-sm font-semibold text-gray-900 mb-2 flex items-center">
+                      <div className="w-2 h-2 bg-primary-500 rounded-full mr-2"></div>
+                      Packaging Options
+                    </h4>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {product.packaging}
+                    </p>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h4 className="text-sm font-semibold text-gray-900 mb-2 flex items-center">
+                      <div className="w-2 h-2 bg-primary-500 rounded-full mr-2"></div>
+                      Quality Assurance
+                    </h4>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      Regular quality checks and third-party testing ensure
+                      consistent quality standards.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Related Products */}
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8">
+              Related Products
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {relatedProducts.map((relatedProduct, index) => (
+                <motion.div
+                  key={relatedProduct.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={relatedProduct.image}
+                      alt={`${relatedProduct.name} by The 11 Exim Overseas - Premium ${relatedProduct.category} for Global Export`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <div className="text-sm text-primary-600 font-medium mb-2">
+                      {relatedProduct.category}
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-4">
+                      {relatedProduct.name}
+                    </h3>
+                    <Link
+                      to={`/products/${relatedProduct.id}`}
+                      className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 font-medium"
+                    >
+                      <span>View Details</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Quote Form Modal */}
+        {showQuoteForm && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-2xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                Request Quote
+              </h3>
+
+              {/* Success Message */}
+              {quoteSuccess && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-3">
+                  <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
+                  <div>
+                    <p className="text-green-800 font-medium">
+                      Quote request submitted successfully!
+                    </p>
+                    <p className="text-green-600 text-sm">
+                      We'll get back to you within 24 hours.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Error Message */}
+              {quoteSubmitError && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-3">
+                  <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0" />
+                  <div>
+                    <p className="text-red-800 font-medium">
+                      Submission failed
+                    </p>
+                    <p className="text-red-600 text-sm">{quoteSubmitError}</p>
+                  </div>
+                </div>
+              )}
+
+              <form onSubmit={handleQuoteSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Product *
+                  </label>
+                  <input
+                    type="text"
+                    name="product"
+                    value={quoteFormData.product || product.name}
+                    onChange={handleQuoteInputChange}
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+                      quoteErrors.product ? "border-red-500" : "border-gray-200"
+                    }`}
+                    placeholder="Product name"
+                  />
+                  {quoteErrors.product && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.product}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Quantity Required *
+                  </label>
+                  <input
+                    type="text"
+                    name="quantity"
+                    value={quoteFormData.quantity}
+                    onChange={handleQuoteInputChange}
+                    placeholder="e.g., 5000 kg"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+                      quoteErrors.quantity
+                        ? "border-red-500"
                         : "border-gray-200"
                     }`}
-                  >
-                    <img
-                      src={image}
-                      alt={`${product.name} ${index + 1}`}
-                      className="w-full h-full object-cover"
-                      onError={() => {
-                        console.error("Thumbnail image failed to load:", image);
-                      }}
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Product Info */}
-          <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <span className="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-medium">
-                {product.category}
-              </span>
-              <div className="flex items-center space-x-1">
-                <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                <span className="text-sm text-gray-600">
-                  {product.popularity}% Popular
-                </span>
-              </div>
-            </div>
-
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              {product.name}
-            </h1>
-
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              {product.description}
-            </p>
-
-            {/* Key Features */}
-            <div className="mb-8">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Key Features
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {product.features.map((feature, index) => (
-                  <div key={index} className="flex items-center space-x-2">
-                    <CheckCircle className="h-5 w-5 text-primary-600" />
-                    <span className="text-gray-700">{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Certifications */}
-            <div className="mb-8">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Certifications
-              </h3>
-              <div className="flex flex-wrap gap-3">
-                {product.certifications.map((cert, index) => (
-                  <span
-                    key={index}
-                    className="bg-primary-100 text-primary-700 px-3 py-2 rounded-lg font-medium flex items-center space-x-2"
-                  >
-                    <Shield className="h-4 w-4" />
-                    <span>{cert}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Quick Info */}
-            <div className="bg-gray-100 rounded-lg p-6 mb-8">
-              <div className="grid grid-cols-2 gap-6">
-                <div className="flex items-center space-x-3">
-                  <MapPin className="h-5 w-5 text-primary-600" />
-                  <div>
-                    <div className="text-sm text-gray-600">Origin</div>
-                    <div className="font-medium">{product.origin}</div>
-                  </div>
+                  />
+                  {quoteErrors.quantity && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.quantity}
+                    </p>
+                  )}
                 </div>
-                <div className="flex items-center space-x-3">
-                  <Package className="h-5 w-5 text-primary-600" />
-                  <div>
-                    <div className="text-sm text-gray-600">Min. Order</div>
-                    <div className="font-medium">{product.minimumOrder}</div>
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Your Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={quoteFormData.name}
+                    onChange={handleQuoteInputChange}
+                    placeholder="Full Name"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+                      quoteErrors.name ? "border-red-500" : "border-gray-200"
+                    }`}
+                  />
+                  {quoteErrors.name && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.name}
+                    </p>
+                  )}
                 </div>
-                <div className="flex items-center space-x-3">
-                  <Calendar className="h-5 w-5 text-primary-600" />
-                  <div>
-                    <div className="text-sm text-gray-600">Shelf Life</div>
-                    <div className="font-medium">{product.shelfLife}</div>
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={quoteFormData.email}
+                    onChange={handleQuoteInputChange}
+                    placeholder="your@email.com"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+                      quoteErrors.email ? "border-red-500" : "border-gray-200"
+                    }`}
+                  />
+                  {quoteErrors.email && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.email}
+                    </p>
+                  )}
                 </div>
-                <div className="flex items-center space-x-3">
-                  <Truck className="h-5 w-5 text-primary-600" />
-                  <div>
-                    <div className="text-sm text-gray-600">Packaging</div>
-                    <div className="font-medium">Customizable</div>
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={quoteFormData.phone}
+                    onChange={handleQuoteInputChange}
+                    placeholder="+91 9876543210"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+                      quoteErrors.phone ? "border-red-500" : "border-gray-200"
+                    }`}
+                  />
+                  {quoteErrors.phone && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.phone}
+                    </p>
+                  )}
                 </div>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={() => {
-                  setQuoteFormData((prev) => ({
-                    ...prev,
-                    product: product.name,
-                  }));
-                  setShowQuoteForm(true);
-                }}
-                className="flex-1 bg-primary-600 text-white py-4 px-6 rounded-lg hover:bg-primary-700 transition-colors font-semibold text-lg"
-              >
-                Request Quote
-              </button>
-              <Link
-                to="/contact"
-                className="flex-1 border-2 border-primary-600 text-primary-600 py-4 px-6 rounded-lg hover:bg-primary-50 transition-colors font-semibold text-lg text-center"
-              >
-                Contact Us
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Detailed Information Tabs */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8">
-            {/* Specifications */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Specifications
-              </h3>
-              <div className="space-y-4">
-                {Object.entries(product.specifications).map(([key, value]) => (
-                  <div
-                    key={key}
-                    className="flex justify-between items-center py-2 border-b border-gray-100"
-                  >
-                    <span className="text-gray-600">{key}:</span>
-                    <span className="font-medium text-gray-900">{value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Nutritional Information */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Nutritional Info
-              </h3>
-              <div className="space-y-4">
-                {Object.entries(product.nutritionalInfo).map(([key, value]) => (
-                  <div
-                    key={key}
-                    className="flex justify-between items-center py-2 border-b border-gray-100"
-                  >
-                    <span className="text-gray-600">{key}:</span>
-                    <span className="font-medium text-gray-900">{value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Storage & Handling */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-              <h3 className="text-xl font-bold text-gray-900 mb-5 flex items-center">
-                <Package className="h-5 w-5 text-primary-600 mr-2" />
-                Storage & Handling
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-2 flex items-center">
-                    <div className="w-2 h-2 bg-primary-500 rounded-full mr-2"></div>
-                    Storage Conditions
-                  </h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {product.storageConditions}
-                  </p>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Company *
+                  </label>
+                  <input
+                    type="text"
+                    name="company"
+                    value={quoteFormData.company}
+                    onChange={handleQuoteInputChange}
+                    placeholder="Company Name"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
+                      quoteErrors.company ? "border-red-500" : "border-gray-200"
+                    }`}
+                  />
+                  {quoteErrors.company && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {quoteErrors.company}
+                    </p>
+                  )}
                 </div>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-2 flex items-center">
-                    <div className="w-2 h-2 bg-primary-500 rounded-full mr-2"></div>
-                    Packaging Options
-                  </h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {product.packaging}
-                  </p>
-                </div>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-2 flex items-center">
-                    <div className="w-2 h-2 bg-primary-500 rounded-full mr-2"></div>
-                    Quality Assurance
-                  </h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Regular quality checks and third-party testing ensure
-                    consistent quality standards.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Related Products */}
-        <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
-            Related Products
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {relatedProducts.map((relatedProduct, index) => (
-              <motion.div
-                key={relatedProduct.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={relatedProduct.image}
-                    alt={relatedProduct.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Additional Requirements
+                  </label>
+                  <textarea
+                    name="requirements"
+                    value={quoteFormData.requirements}
+                    onChange={handleQuoteInputChange}
+                    placeholder="Any specific requirements or details..."
+                    rows={3}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
                   />
                 </div>
-                <div className="p-6">
-                  <div className="text-sm text-primary-600 font-medium mb-2">
-                    {relatedProduct.category}
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">
-                    {relatedProduct.name}
-                  </h3>
-                  <Link
-                    to={`/products/${relatedProduct.id}`}
-                    className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 font-medium"
+                <div className="flex space-x-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowQuoteForm(false);
+                      setQuoteErrors({});
+                      setQuoteSubmitError("");
+                      setQuoteSuccess(false);
+                    }}
+                    className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                    disabled={isSubmittingQuote}
                   >
-                    <span>View Details</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmittingQuote || quoteSuccess}
+                    className="flex-1 bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                  >
+                    {isSubmittingQuote ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                        <span>Submitting...</span>
+                      </>
+                    ) : quoteSuccess ? (
+                      <>
+                        <CheckCircle2 className="h-4 w-4" />
+                        <span>Submitted!</span>
+                      </>
+                    ) : (
+                      "Submit Quote"
+                    )}
+                  </button>
                 </div>
-              </motion.div>
-            ))}
+              </form>
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Toast Notifications */}
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </div>
-
-      {/* Quote Form Modal */}
-      {showQuoteForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
-              Request Quote
-            </h3>
-
-            {/* Success Message */}
-            {quoteSuccess && (
-              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-3">
-                <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
-                <div>
-                  <p className="text-green-800 font-medium">
-                    Quote request submitted successfully!
-                  </p>
-                  <p className="text-green-600 text-sm">
-                    We'll get back to you within 24 hours.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {/* Error Message */}
-            {quoteSubmitError && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-3">
-                <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0" />
-                <div>
-                  <p className="text-red-800 font-medium">Submission failed</p>
-                  <p className="text-red-600 text-sm">{quoteSubmitError}</p>
-                </div>
-              </div>
-            )}
-
-            <form onSubmit={handleQuoteSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Product *
-                </label>
-                <input
-                  type="text"
-                  name="product"
-                  value={quoteFormData.product || product.name}
-                  onChange={handleQuoteInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
-                    quoteErrors.product ? "border-red-500" : "border-gray-200"
-                  }`}
-                  placeholder="Product name"
-                />
-                {quoteErrors.product && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {quoteErrors.product}
-                  </p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Quantity Required *
-                </label>
-                <input
-                  type="text"
-                  name="quantity"
-                  value={quoteFormData.quantity}
-                  onChange={handleQuoteInputChange}
-                  placeholder="e.g., 5000 kg"
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
-                    quoteErrors.quantity ? "border-red-500" : "border-gray-200"
-                  }`}
-                />
-                {quoteErrors.quantity && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {quoteErrors.quantity}
-                  </p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Your Name *
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={quoteFormData.name}
-                  onChange={handleQuoteInputChange}
-                  placeholder="Full Name"
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
-                    quoteErrors.name ? "border-red-500" : "border-gray-200"
-                  }`}
-                />
-                {quoteErrors.name && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {quoteErrors.name}
-                  </p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={quoteFormData.email}
-                  onChange={handleQuoteInputChange}
-                  placeholder="your@email.com"
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
-                    quoteErrors.email ? "border-red-500" : "border-gray-200"
-                  }`}
-                />
-                {quoteErrors.email && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {quoteErrors.email}
-                  </p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone Number *
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={quoteFormData.phone}
-                  onChange={handleQuoteInputChange}
-                  placeholder="+91 9876543210"
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
-                    quoteErrors.phone ? "border-red-500" : "border-gray-200"
-                  }`}
-                />
-                {quoteErrors.phone && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {quoteErrors.phone}
-                  </p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Company *
-                </label>
-                <input
-                  type="text"
-                  name="company"
-                  value={quoteFormData.company}
-                  onChange={handleQuoteInputChange}
-                  placeholder="Company Name"
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent ${
-                    quoteErrors.company ? "border-red-500" : "border-gray-200"
-                  }`}
-                />
-                {quoteErrors.company && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {quoteErrors.company}
-                  </p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Additional Requirements
-                </label>
-                <textarea
-                  name="requirements"
-                  value={quoteFormData.requirements}
-                  onChange={handleQuoteInputChange}
-                  placeholder="Any specific requirements or details..."
-                  rows={3}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
-                />
-              </div>
-              <div className="flex space-x-3 pt-4">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowQuoteForm(false);
-                    setQuoteErrors({});
-                    setQuoteSubmitError("");
-                    setQuoteSuccess(false);
-                  }}
-                  className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium"
-                  disabled={isSubmittingQuote}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isSubmittingQuote || quoteSuccess}
-                  className="flex-1 bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-                >
-                  {isSubmittingQuote ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      <span>Submitting...</span>
-                    </>
-                  ) : quoteSuccess ? (
-                    <>
-                      <CheckCircle2 className="h-4 w-4" />
-                      <span>Submitted!</span>
-                    </>
-                  ) : (
-                    "Submit Quote"
-                  )}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Toast Notifications */}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-    </div>
+    </>
   );
 };
 

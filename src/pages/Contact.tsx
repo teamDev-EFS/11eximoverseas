@@ -233,9 +233,10 @@ const Contact = () => {
   return (
     <>
       <SEO
-        title="Contact Us - The11EximOverSeas"
-        description="Get in touch with The11EximOverSeas for premium agricultural product exports. Contact our team for quotes, partnerships, and global trade opportunities."
-        keywords="contact agricultural exports, export inquiry, global trade contact, agricultural products quote, partnership inquiry"
+        title="Contact The 11 Exim Overseas | Get Quote & Partnership Inquiry | Global Trade"
+        description="Contact The 11 Exim Overseas for premium agricultural product exports, quotes, and partnership opportunities. Leading agro-export company with global trade excellence."
+        keywords="The 11 Exim Overseas, 11 Exim Overseas, Exim Overseas India, contact, get quote, partnership inquiry, agricultural exports, global trade contact, agro export India"
+        url="https://the11eximoverseas.com/contact"
       />
       <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-primary-50/30">
         {/* Hero Section */}
@@ -249,7 +250,7 @@ const Contact = () => {
               className="text-center max-w-4xl mx-auto"
             >
               <h1 className="text-5xl lg:text-7xl font-display font-bold text-gradient mb-8 text-balance">
-                Get In Touch
+                Contact The 11 Exim Overseas
               </h1>
               <p className="text-xl text-neutral-600 mb-12 leading-relaxed text-balance">
                 Ready to start your international trade journey? Contact our
