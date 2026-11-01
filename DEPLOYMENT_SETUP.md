@@ -40,7 +40,7 @@ VITE_API_URL = https://the11eximoverseas-backend.onrender.com/api
 VITE_APP_NAME = The11EximOverSeas Ventures
 VITE_DOMAIN = www.the11eximoverseas.com
 VITE_CANONICAL_URL = https://www.the11eximoverseas.com
-VITE_GOOGLE_MAPS_API_KEY = AIzaSyDoy4xd7POgSrkLzxi8Z3b5DT4nrDA-zmw
+VITE_GOOGLE_MAPS_API_KEY = YOUR_GOOGLE_MAPS_API_KEY
 ```
 
 ## Backend Deployment (Render)

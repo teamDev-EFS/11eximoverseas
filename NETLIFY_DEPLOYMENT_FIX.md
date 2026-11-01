@@ -67,7 +67,7 @@ Make sure these are set in Netlify:
 
 - `VITE_API_URL` = `https://one1eximoverseas.onrender.com/api`
 - `VITE_APP_NAME` = `The11EximOverSeas Ventures`
-- `VITE_GOOGLE_MAPS_API_KEY` = `AIzaSyDoy4xd7POgSrkLzxi8Z3b5DT4nrDA-zmw`
+- `VITE_GOOGLE_MAPS_API_KEY` = `YOUR_GOOGLE_MAPS_API_KEY`
 
 ## 🔧 **Quick Fix Commands**
 

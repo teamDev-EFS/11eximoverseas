@@ -27,7 +27,7 @@ VITE_ENABLE_DEBUG=true
 VITE_CSP_NONCE=
 
 # Google Maps
-VITE_GOOGLE_MAPS_API_KEY=AIzaSyDoy4xd7POgSrkLzxi8Z3b5DT4nrDA-zmw
+VITE_GOOGLE_MAPS_API_KEY=
 `;
 
 // Backend environment variables

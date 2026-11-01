@@ -121,7 +121,7 @@ npm install
 
 # Create .env.local file with:
 VITE_API_URL=http://localhost:5000/api
-VITE_GOOGLE_MAPS_API_KEY=AIzaSyDoy4xd7POgSrkLzxi8Z3b5DT4nrDA-zmw
+VITE_GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
 # ... other variables
 
 # Start development server
